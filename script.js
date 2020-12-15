@@ -6,15 +6,32 @@ const sortBtn = document.getElementById("sort");
 const calculateWealthBtn = document.getElementById("calculate-wealth");
 
 const URL = `https://randomuser.me/api`;
+const CORS = { headers: { "Access-Control-Allow-Origin": "*" } };
 let data = [];
+let tempArr = [];
+let counter = 0;
+let tempCount = 0;
+let toggle = false;
 
+getRandomUser();
+getRandomUser();
+getRandomUser();
+getRandomUser();
+getRandomUser();
+getRandomUser();
+getRandomUser();
+getRandomUser();
+getRandomUser();
+getRandomUser();
+getRandomUser();
+getRandomUser();
 getRandomUser();
 getRandomUser();
 getRandomUser();
 
 // Fetch random User & add money
 async function getRandomUser() {
-  const res = await fetch(URL);
+  const res = await fetch(URL, CORS);
   const data = await res.json();
 
   const user = data.results[0];
@@ -25,6 +42,56 @@ async function getRandomUser() {
   };
 
   addData(newUser);
+}
+
+// Double Everyone's money
+function doubleMoney() {
+  data = data.map(user => {
+    return { ...user, money: user.money * 2 };
+  });
+
+  updateDOM();
+}
+
+// Sort users by richest
+function sortByRichest() {
+  data.sort((a, b) => b.money - a.money);
+
+  updateDOM();
+}
+
+// Filter only Millionaires
+function showMillionaires() {
+  let temp = data;
+  if (!toggle && tempCount === 0) {
+    temp = temp.filter(user => user.money >= 1000000);
+    tempArr.push(temp);
+    updateDOM(temp);
+    toggle = true;
+    tempCount++;
+  } else {
+    updateDOM();
+    tempArr = [];
+    tempCount = 0;
+    toggle = false;
+  }
+}
+
+// Calculate the total wealth
+function calculateWealth() {
+  if (counter === 0 && tempArr.length > 0) {
+    const wealth = tempArr[0].reduce((acc, curr) => acc + curr.money, 0);
+    const wealthEl = document.createElement("div");
+    wealthEl.innerHTML = `<h3>Total Wealth: <strong>${formatMoney(wealth)}</strong></h3>`;
+    main.appendChild(wealthEl);
+    counter = 1;
+  } else if (counter === 0) {
+    const wealth = data.reduce((acc, curr) => acc + curr.money, 0);
+    const wealthEl = document.createElement("div");
+    wealthEl.innerHTML = `<h3>Total Wealth: <strong>${formatMoney(wealth)}</strong></h3>`;
+    main.appendChild(wealthEl);
+    counter = 1;
+  }
 }
 
 // Add new obj to data arr
@@ -47,6 +114,7 @@ function updateDOM(providedData = data) {
       <strong>${person.name}</strong> ${formatMoney(person.money)}`;
     main.appendChild(div);
   });
+  return (counter = 0);
 }
 
 // Format number as money
@@ -56,3 +124,7 @@ function formatMoney(num) {
 
 // Event Listeners
 addUserBtn.addEventListener("click", getRandomUser);
+doubleBtn.addEventListener("click", doubleMoney);
+sortBtn.addEventListener("click", sortByRichest);
+showMillionairesBtn.addEventListener("click", showMillionaires);
+calculateWealthBtn.addEventListener("click", calculateWealth);
