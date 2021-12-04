@@ -5,6 +5,21 @@ const showMillionairesBtn = document.getElementById("show-millionaires");
 const sortBtn = document.getElementById("sort");
 const calculateWealthBtn = document.getElementById("calculate-wealth");
 
+// Testing user on Udemy's code
+// const container = document.querySelector(".container");
+// container.addEventListener("click", e => {
+//   if (e.target.className === "show") {
+//     let temp = data.filter(user => user.money > 1000000);
+//     updateDOM(temp);
+//   } else {
+//     updateDOM();
+//   }
+
+//   if (e.target.classList.contains("show")) {
+//     e.target.classList.toggle("dont");
+//   }
+// });
+
 const URL = `https://randomuser.me/api`;
 const CORS = { headers: { "Access-Control-Allow-Origin": "*" } };
 let data = [];
@@ -13,19 +28,6 @@ let counter = 0;
 let tempCount = 0;
 let toggle = false;
 
-getRandomUser();
-getRandomUser();
-getRandomUser();
-getRandomUser();
-getRandomUser();
-getRandomUser();
-getRandomUser();
-getRandomUser();
-getRandomUser();
-getRandomUser();
-getRandomUser();
-getRandomUser();
-getRandomUser();
 getRandomUser();
 getRandomUser();
 
@@ -62,6 +64,12 @@ function sortByRichest() {
 
 // Filter only Millionaires
 function showMillionaires() {
+  data = data.filter(user => user.money > 1000000);
+
+  updateDOM();
+}
+
+function showMillionaires() {
   let temp = data;
   if (!toggle && tempCount === 0) {
     temp = temp.filter(user => user.money >= 1000000);
@@ -78,6 +86,15 @@ function showMillionaires() {
 }
 
 // Calculate the total wealth
+
+// Testing user on Udemy's code
+// function calculateWealth() {
+//   const wealth = data.reduce((acc, user) => (acc += user.money), 0);
+//   const wealthEl = document.createElement("div");
+//   wealthEl.innerHTML = `<h3>Total Wealth: <strong>${formatMoney(wealth)}</strong></h3>`;
+//   main.appendChild(wealthEl);
+// }
+
 function calculateWealth() {
   if (counter === 0 && tempArr.length > 0) {
     const wealth = tempArr[0].reduce((acc, curr) => acc + curr.money, 0);
