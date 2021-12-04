@@ -36,6 +36,10 @@ This project uses a chart of users associated with their wealth. Using DOM array
 - Show Millionaires - filter()
 - Calculate Wealth - reduce()
 
+## API
+
+- [Random User API](https://randomuser.me/api)
+
 ### Front end deployed to `GitHub Pages`
 
 > [DOM Array Methods](https://sjeremich23.github.io/Dom-Array-Methods/)
